@@ -847,17 +847,17 @@ function changeTabContent(url) {
 
 function openInAboutBlank() {
     const newWindow = window.open('about:blank', '_blank');
-    
+
     const clonedDocument = document.documentElement.cloneNode(true);
-    
+
     // Remove the square button from the cloned document
     const squareButton = clonedDocument.querySelector('#square-buttonaa');
     if (squareButton) {
         squareButton.remove();
     }
-    
+
     newWindow.document.write(clonedDocument.outerHTML);
-    
+
     newWindow.document.close();
 }
 // Function to open Helios in a blob: tab
@@ -865,8 +865,8 @@ function openInAboutBlank() {
 async function openInBlob() {
     // Clone the document's static DOM structure
     const htmlDocument = document.documentElement.cloneNode(true);
-  // Block duplication of square button
-const squareButton = htmlDocument.querySelector('#square-buttonaa');
+    // Block duplication of square button
+    const squareButton = htmlDocument.querySelector('#square-buttonaa');
     if (squareButton) {
         squareButton.remove();
     }
@@ -875,7 +875,7 @@ const squareButton = htmlDocument.querySelector('#square-buttonaa');
     scripts.forEach(script => {
         const deferredScript = document.createElement('script');
         deferredScript.type = 'text/javascript';
-        
+
         // Wrap inline scripts in a function and defer execution
         if (script.textContent) {
             deferredScript.textContent = `
@@ -917,7 +917,9 @@ const squareButton = htmlDocument.querySelector('#square-buttonaa');
     await Promise.all(cssPromises);
 
     // Serialize the modified document and create a Blob
-    const blob = new Blob([htmlDocument.outerHTML], { type: 'text/html' });
+    const blob = new Blob([htmlDocument.outerHTML], {
+        type: 'text/html'
+    });
     const url = URL.createObjectURL(blob);
     window.open(url, '_blank');
 }
@@ -1312,7 +1314,7 @@ function downloadPage() {
     // Attempt to fetch from GitHub first
     const url = "https://raw.githubusercontent.com/dinguschan-owo/Helios/refs/heads/main/Offline-File/Helios-Offline.html";
     fetch(url)
-        .then(response => response.blob())        .then(blob => {
+        .then(response => response.blob()).then(blob => {
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = "Helios-Offline.html";
@@ -1340,7 +1342,7 @@ function downloadPage() {
 
     function downloadFile(data) {
         const blob = new Blob([data], {
-            type: 'text/html'  // Set the MIME type for HTML files
+            type: 'text/html' // Set the MIME type for HTML files
         });
         const url = URL.createObjectURL(blob);
 
@@ -1379,40 +1381,40 @@ function generateUserID() {
 window.onload = generateUserID;
 
 function executeScriptsFromContent(content) {
-  // Create a temporary div to hold the content
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = content;
+    // Create a temporary div to hold the content
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = content;
 
-  // Find all script tags in the content
-  const scripts = tempDiv.getElementsByTagName('script');
+    // Find all script tags in the content
+    const scripts = tempDiv.getElementsByTagName('script');
 
-  // Execute each script
-  Array.from(scripts).forEach(script => {
-    const newScript = document.createElement('script');
+    // Execute each script
+    Array.from(scripts).forEach(script => {
+        const newScript = document.createElement('script');
 
-    // If the script has a src attribute, copy it
-    if (script.src) {
-      newScript.src = script.src;
-    } else {
-      // Otherwise, copy the inline script content
-      newScript.textContent = script.textContent;
-    }
+        // If the script has a src attribute, copy it
+        if (script.src) {
+            newScript.src = script.src;
+        } else {
+            // Otherwise, copy the inline script content
+            newScript.textContent = script.textContent;
+        }
 
-    // Set other attributes like type, async, defer if present
-    Array.from(script.attributes).forEach(attr => {
-      if (attr.name !== 'src') {
-        newScript.setAttribute(attr.name, attr.value);
-      }
+        // Set other attributes like type, async, defer if present
+        Array.from(script.attributes).forEach(attr => {
+            if (attr.name !== 'src') {
+                newScript.setAttribute(attr.name, attr.value);
+            }
+        });
+
+        // Append the new script to the document to execute it
+        document.head.appendChild(newScript);
+        // Optionally remove the script after execution
+        // document.head.removeChild(newScript);
     });
 
-    // Append the new script to the document to execute it
-    document.head.appendChild(newScript);
-    // Optionally remove the script after execution
-    // document.head.removeChild(newScript);
-  });
-
-  // Return the content without the original script tags
-  return tempDiv.innerHTML;
+    // Return the content without the original script tags
+    return tempDiv.innerHTML;
 }
 // Execute scripts and update the content
 const contentWithoutScripts = executeScriptsFromContent(fetchedContent);
@@ -1541,42 +1543,42 @@ async function decryptData(encryptedObj, key) {
     return new TextDecoder().decode(decryptedData);
 }
 
-    // Function to generate a unique data URL
+// Function to generate a unique data URL
 
-       function generateDataURL() {
+function generateDataURL() {
     const htmlContent = document.documentElement.outerHTML;
     const dataURL = 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlContent);
-   
+
     document.getElementById("dataURLText").value = dataURL;
-    document.getElementById("myModal").style.display = "flex"; 
+    document.getElementById("myModal").style.display = "flex";
     document.querySelector(".modal-contentgg").style.display = "block";
 }
 
 document.getElementById("dataURL").addEventListener("click", generateDataURL);
 
-        // Function to copy the data URL to clipboard
-        function copyDataURL() {
-            const dataURLText = document.getElementById("dataURLText");
-            const copyButton = document.getElementById("copyButton");
+// Function to copy the data URL to clipboard
+function copyDataURL() {
+    const dataURLText = document.getElementById("dataURLText");
+    const copyButton = document.getElementById("copyButton");
 
-            dataURLText.select(); 
-            navigator.clipboard.writeText(dataURLText.value)
-                .then(() => {
-                    copyButton.textContent = "Copied!"; 
-                    setTimeout(() => {
-                        copyButton.textContent = "Copy"; 
-                    }, 3000);
-                })
-                .catch(() => {
-                    copyButton.textContent = "Error"; 
-                    setTimeout(() => {
-                        copyButton.textContent = "Copy";
-                    }, 3000);
-                });
-        }
+    dataURLText.select();
+    navigator.clipboard.writeText(dataURLText.value)
+        .then(() => {
+            copyButton.textContent = "Copied!";
+            setTimeout(() => {
+                copyButton.textContent = "Copy";
+            }, 3000);
+        })
+        .catch(() => {
+            copyButton.textContent = "Error";
+            setTimeout(() => {
+                copyButton.textContent = "Copy";
+            }, 3000);
+        });
+}
 
-        // Function to close the modal
-        function closeModal() {
+// Function to close the modal
+function closeModal() {
     document.getElementById("myModal").style.display = "none";
     document.querySelector(".modal-contentgg").style.display = "none";
 }
